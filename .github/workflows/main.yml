@@ -1,0 +1,9 @@
+name: project-demo
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compile Project
+        run: |
+          mvn clean install
