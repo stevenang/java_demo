@@ -4,6 +4,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Compile Project
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          architecture: x64
+      - name: Run maven build
+        run: mvn clean install
+      - name: Setup localstack
         run: |
-          mvn clean install
+          pip install localstack awscli-local[ver1]
+          docker pull localstack/localstack
+          localstack start -d
+          echo "Waiting for LocalStatck startup..."
+          localstack wait -t 30
+          echo "Startup complete"
+      - name: Test LocalStack
+        run: |
+          awslocal s3 ls
+          echo "LocalStack Test Completed"
