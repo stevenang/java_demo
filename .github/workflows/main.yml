@@ -18,7 +18,7 @@ jobs:
           docker pull localstack/localstack
           localstack start -d
           echo "Waiting for LocalStatck startup..."
-          localstack wait -t 30s
+          localstack wait -t 30
           echo "Startup complete"
       - name: Test LocalStack
         run: |
