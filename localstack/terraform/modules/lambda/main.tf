@@ -58,7 +58,6 @@ resource "aws_lambda_function" "this" {
 }
 
 resource "aws_lambda_event_source_mapping" "this" {
-  count = var.event_source_arn == "" ? 0 : 1
   event_source_arn = var.event_source_arn
   function_name    = aws_lambda_function.this.arn
 }
