@@ -14,7 +14,7 @@ jobs:
         run: mvn clean install
       - name: Setup localstack
         run: |
-          pip install localstack awscli-local[ver1]
+          pip install localstack awscli-local[ver1] terraform-local
           docker pull localstack/localstack
           localstack start -d
           echo "Waiting for LocalStatck startup..."
@@ -24,3 +24,12 @@ jobs:
         run: |
           awslocal s3 ls
           echo "LocalStack Test Completed"
+      - name: Run terraform
+        run: |
+          cd localstack/terraform
+          tflocal init
+          tflocal plan
+          tflocal apply --auto-approve
+      - name: Test LocalStack 2
+        run: |
+          awslocal s3api list-buckets
