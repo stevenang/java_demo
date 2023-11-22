@@ -1,3 +1,10 @@
 /.idea/
 /.vscode/
 /modules/SqsEventLambdaDemo/target/
+/modules/SqsEventLambdaDemo/target/*.jar
+/localstack/terraform/.terraform.lock.hcl
+/localstack/terraform/terraform.tfstate
+/localstack/terraform/.terraform/
+/localstack/terraform/.terraform.tfstate.lock.info
+/localstack/terraform/localstack_providers_override.tf
+/localstack/terraform/terraform.tfstate.backup

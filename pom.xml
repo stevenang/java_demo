@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
+        <module>modules/Common</module>
         <module>modules/SqsEventLambdaDemo</module>
     </modules>
 
@@ -58,6 +59,11 @@
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-java-sdk-s3</artifactId>
                 <version>${aws-sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>s3</artifactId>
+                <version>2.21.27</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
