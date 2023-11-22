@@ -12,3 +12,15 @@ jobs:
           architecture: x64
       - name: Run maven build
         run: mvn clean install
+      - name: Setup localstack
+        run: |
+          pip install localstack awscli-local[ver1]
+          docker pull localstack/localstack
+          localstack start -d
+          echo "Waiting for LocalStatck startup..."
+          localstack wait -t 30s
+          echo "Startup complete"
+      - name: Test LocalStack
+        run: |
+          awslocal s3 ls
+          echo "LocalStack Test Completed"
