@@ -26,5 +26,10 @@ jobs:
           echo "LocalStack Test Completed"
       - name: Run terraform
         run: |
-          pwd
-          ls -al
+          cd localstack/terraform
+          tflocal init
+          tflocal plan
+          tflocal apply --auto-approve
+      - name: Test LocalStack 2
+        run: |
+          awslocal s3api list-buckets
