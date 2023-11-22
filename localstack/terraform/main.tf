@@ -97,7 +97,7 @@ module "create_sns_topics" {
 }
 
 module "create_sns_topic_subscriptions" {
-  source                 = "./modules/sns_topic_subscriptions"
+  source                 = "./modules/sns_topic_subscription"
   for_each               = local.sns_topics
   s3_bucket_arn          = module.create_s3_buckets[each.key].bucket_arn
   sns_topic_arn          = module.create_sns_topics[each.key].sns_topic_arn
