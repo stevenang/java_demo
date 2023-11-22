@@ -111,3 +111,11 @@ module "create_s3_notifications" {
   bucket_id = module.create_s3_buckets[each.value].bucket_id
   topic_arn = module.create_sns_topics[each.value].sns_topic_arn
 }
+
+module "create_lambda_for_sqs" {
+  source = "./modules/lambda"
+  function_name = "Sqs_Event_Lambda"
+  file_name = "../../modules/SqsEventLambdaDemo/target/SqsEventLambdaDemo.jar"
+  handler = "tw.idv.stevenang.lambda.LambdaHandler::handleRequest"
+  event_source_arn = module.create_sqs_queue[0].queue_arn
+}
