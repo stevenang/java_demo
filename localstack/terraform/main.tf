@@ -117,5 +117,5 @@ module "create_lambda_for_sqs" {
   function_name = "Sqs_Event_Lambda"
   file_name = "../../modules/SqsEventLambdaDemo/target/SqsEventLambdaDemo.jar"
   handler = "tw.idv.stevenang.lambda.LambdaHandler::handleRequest"
-  event_source_arn = module.create_sqs_queue[0].queue_arn
+  event_source_arn = module.create_sqs_queue["test-bucket-01"].queue_arn
 }
