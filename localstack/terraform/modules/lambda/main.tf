@@ -55,6 +55,7 @@ resource "aws_lambda_function" "this" {
   role = aws_iam_role.this.arn
   handler = var.handler
   runtime = "java11"
+  timeout = 600
   environment {
     variables = {
       AWS_ACCESS_KEY_ID = var.aws_access_key_id,

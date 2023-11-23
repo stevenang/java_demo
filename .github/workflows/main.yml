@@ -29,6 +29,8 @@ jobs:
       - name: Copy file to s3 to trigger lambda
         run: |
           pwd
+          echo "List SNS topic subscription..."
+          awslocal sns list-subscriptions-by-topic --topic-arn arn:aws:sns:us-east-1:000000000000:test-topic-01
           echo "Get lambda configuration"
           awslocal lambda get-function-configuration --function-name Sqs_Event_Lambda 
           echo "Get lambda event-source-mapping"
