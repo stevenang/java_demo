@@ -28,6 +28,11 @@ jobs:
           tflocal apply --auto-approve
       - name: Copy file to s3 to trigger lambda
         run: |
+          pwd
+          echo "Get lambda configuration"
+          awslocal lambda get-function-configuration --function-name Sqs_Event_Lambda 
+          echo "Get lambda event-source-mapping"
+          awslocal lambda list-event-source-mappings --function-name Sqs_Event_Lambda
           cd localstack/terraform
           awslocal s3api put-object --bucket test-bucket-01 --key main.tf --body main.tf
           echo "Wait for 150 seconds..."
