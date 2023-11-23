@@ -20,6 +20,7 @@ jobs:
         run: |
           pip install localstack awscli-local[ver1] terraform-local
           docker pull localstack/localstack
+          ls -alR
           localstack start -d
           echo "Waiting for LocalStatck startup..."
           localstack wait -t 30
