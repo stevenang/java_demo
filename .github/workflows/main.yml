@@ -20,7 +20,7 @@ jobs:
         run: |
           pip install localstack awscli-local[ver1] terraform-local
           docker pull localstack/localstack
-          LAMBDA_RUNTIME_ENVIRONMENT_TIMEOUT=120 localstack start -d
+          LAMBDA_RUNTIME_ENVIRONMENT_TIMEOUT=30 localstack start -d
           echo "Waiting for LocalStatck startup..."
           localstack wait -t 30
           echo "Startup complete"
