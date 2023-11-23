@@ -36,5 +36,13 @@ jobs:
           awslocal s3 ls s3://test-bucket-01 --human-readable
           echo "Wait for another 150 seconds..."
           sleep 150
+          echo "Execute \"awslocal sqs get-queue-attributes\""
+          awslocal sqs get-queue-attributes --queue-url http://localhost:4566/000000000000/test-queue-01 --attribute-names All 
+          echo "Wait for another 150 seconds..."
+          sleep 150
+          echo "Execute \"awslocal sqs get-queue-attributes\""
+          awslocal sqs get-queue-attributes --queue-url http://localhost:4566/000000000000/test-queue-02 --attribute-names All 
+          echo "Wait for another 150 seconds..."
+          sleep 150
           echo "Execute \"awslocal s3 ls s3://test-bucket-02 --human-readable\""
           awslocal s3 ls s3://test-bucket-02 --human-readable
