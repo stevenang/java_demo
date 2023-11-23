@@ -70,7 +70,6 @@ jobs:
           echo "Wait for another 10 seconds..."
           sleep 10
           awslocal --endpoint-url http://localhost.localstack.cloud:4566 logs describe-log-groups
-           echo "Wait for another 10 seconds..."
-          sleep 10
-          awslocal --endpoint-url http://localhost.localstack.cloud:4566 logs tail "/aws/lambda/Sqs_Event_Lambda"
+          awslocal s3 ls s3://test-bucket-01 --human-readable
+          awslocal s3 ls s3://test-bucket-02 --human-readable
           
