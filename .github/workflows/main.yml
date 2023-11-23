@@ -66,32 +66,11 @@ jobs:
           awslocal sqs get-queue-attributes --queue-url http://localhost:4566/000000000000/test-queue-01-dlq --attribute-names All 
           echo "Wait for another 10 seconds..."
           sleep 10
-          awslocal --endpoint-url http://localhost:4566 logs describe-log-groups
+          awslocal logs describe-log-groups
           echo "Wait for another 10 seconds..."
           sleep 10
           awslocal --endpoint-url http://localhost.localstack.cloud:4566 logs describe-log-groups
-          echo "Wait for another 10 seconds..."
+           echo "Wait for another 10 seconds..."
           sleep 10
-          awslocal logs describe-log-groups
-          echo "Wait for another 10 seconds..."
-          sleep 10
-          awslocal logs describe-log-groups
-          echo "Wait for another 10 seconds..."
-          sleep 10
-          awslocal logs describe-log-groups
-          echo "Wait for another 10 seconds..."
-          sleep 10
-          awslocal logs describe-log-groups
-          echo "Wait for another 10 seconds..."
-          sleep 10
-          awslocal logs describe-log-groups
-          echo "Wait for another 10 seconds..."
-          sleep 10
-          awslocal logs describe-log-groups
-          echo "Wait for another 10 seconds..."
-          sleep 10
-          awslocal logs describe-log-groups
-          echo "Wait for another 10 seconds..."
-          sleep 10
-          awslocal logs describe-log-groups
+          awslocal --endpoint-url http://localhost.localstack.cloud:4566 logs tail "/aws/lambda/Sqs_Event_Lambda"
           
