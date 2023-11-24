@@ -40,6 +40,7 @@ jobs:
           awslocal s3 ls s3://test-bucket-01 --human-readable
           echo "Wait for 120 seconds"
           sleep 120
-          localstack logs describe-log-group
+          localstack logs 
+          awslocal logs describe-log-group
           
           
