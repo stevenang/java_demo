@@ -54,6 +54,7 @@ resource "aws_lambda_function" "this" {
   function_name = var.function_name
   role = aws_iam_role.this.arn
   handler = var.handler
+  memory_size = 1024
   runtime = "java11"
   timeout = 600
   environment {
