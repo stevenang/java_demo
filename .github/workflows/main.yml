@@ -24,7 +24,6 @@ jobs:
           echo "Waiting for LocalStatck startup..."
           localstack wait -t 30
           echo "Startup complete"
-          docker inspect localstack_main
       - name: Run terraform
         run: |
           cd localstack/terraform
@@ -43,4 +42,4 @@ jobs:
           sleep 120
           localstack logs 
           awslocal logs describe-log-groups
-          awslocal logs filter-log-events --log-group-name "/aws/lambda/Sqs_Event_Lambda"
+          awslocal logs filter-log-events --log-group-name "/aws/lambda/Sqs_Event_Lambda" --query 'events[*].message' --output text
