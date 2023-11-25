@@ -24,7 +24,7 @@ provider "aws" {
     dynamodb       = "http://localhost:4566"
     ec2            = "http://localhost:4566"
     es             = "http://localhost:4566"
-    firehose       = "http://localhost:4566"
+    firehose        = "http://localhost:4566"
     iam            = "http://localhost:4566"
     kinesis        = "http://localhost:4566"
     lambda         = "http://localhost:4566"
