@@ -12,6 +12,8 @@ public class S3Utils {
     public static String copyBucketObject(S3Client s3Client, String sourceBucket, String objectKey, String destinationBucket)
             throws S3Exception {
 
+        log.info("Copy {} from {} to {}", objectKey, sourceBucket, destinationBucket);
+
         CopyObjectRequest copyObjectRequest = CopyObjectRequest.builder()
                 .sourceBucket(sourceBucket)
                 .sourceKey(objectKey)
