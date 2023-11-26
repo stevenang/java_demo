@@ -30,7 +30,8 @@ public class SqsEventLambdaDemo implements RequestHandler<SQSEvent, Void> {
         S3Configuration s3Configuration = S3Configuration.builder().pathStyleAccessEnabled(true).build();
         s3Client = S3Client.builder()
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
-                .endpointOverride(URI.create("http://host.docker.internal:4566"))
+                .endpointOverride(URI.create("http://localhost.localstack.cloud:4566"))
+                //.endpointOverride(URI.create("http://host.docker.internal:4566"))
                 //.endpointOverride(URI.create("http://localhost:4566"))
                 //.endpointOverride(URI.create("http://awslocal:4566"))
                 .serviceConfiguration(s3Configuration)
