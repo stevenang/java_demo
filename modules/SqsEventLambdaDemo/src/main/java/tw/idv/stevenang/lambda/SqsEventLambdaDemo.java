@@ -1,6 +1,5 @@
 package tw.idv.stevenang.lambda;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent;
@@ -9,9 +8,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
-import software.amazon.awssdk.identity.spi.AwsCredentialsIdentity;
-import software.amazon.awssdk.identity.spi.IdentityProvider;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3Configuration;
 import tw.idv.stevenang.common.utils.S3Utils;
@@ -31,9 +27,6 @@ public class SqsEventLambdaDemo implements RequestHandler<SQSEvent, Void> {
         s3Client = S3Client.builder()
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                 .endpointOverride(URI.create("http://localhost.localstack.cloud:4566"))
-                //.endpointOverride(URI.create("http://host.docker.internal:4566"))
-                //.endpointOverride(URI.create("http://localhost:4566"))
-                //.endpointOverride(URI.create("http://awslocal:4566"))
                 .serviceConfiguration(s3Configuration)
                 .build();
     }

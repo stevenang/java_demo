@@ -72,6 +72,11 @@ module "create_s3_buckets" {
   bucket_name = each.value
 }
 
+module "create_s3_buckets_test_bucket_03" {
+  source      = "./modules/s3_bucket"
+  bucket_name = "test-bucket-03"
+}
+
 module create_sqs_dlq {
   source     = "./modules/sqs"
   for_each   = local.sqs_queues
@@ -117,5 +122,33 @@ module "create_lambda_for_sqs" {
   function_name = "Sqs_Event_Lambda"
   file_name = "../../modules/SqsEventLambdaDemo/target/SqsEventLambdaDemo.jar"
   handler = "tw.idv.stevenang.lambda.SqsEventLambdaDemo::handleRequest"
+}
+
+resource "aws_lambda_event_source_mapping" "this" {
   event_source_arn = module.create_sqs_queue["test-bucket-01"].queue_arn
+  function_name    = module.create_lambda_for_sqs.aws_lambda_function_arn
+}
+
+module "create_lambda_for_s3_event" {
+  source = "./modules/lambda"
+  function_name = "S3_Event_Lambda"
+  file_name = "../../modules/S3EventLambdaDemo/target/S3EventLambdaDemo.jar"
+  handler = "tw.idv.stevenang.lambda.S3EventLambdaDemo::handleRequest"
+}
+
+resource "aws_lambda_permission" "allow_s3_bucket" {
+  statement_id = "AllowExecutionFromS3Bucket"
+  action = "lambda:InvokeFunction"
+  function_name = module.create_lambda_for_s3_event.aws_lambda_function_arn
+  principal = "s3.amazonaws.com"
+  source_arn = module.create_s3_buckets["test-bucket-02"].bucket_arn
+}
+
+resource "aws_s3_bucket_notification" "bucket_notification" {
+  bucket = module.create_s3_buckets["test-bucket-02"].bucket_id
+  lambda_function {
+    lambda_function_arn = module.create_lambda_for_s3_event.aws_lambda_function_arn
+    events = ["s3:ObjectCreated:*"]
+  }
+  depends_on = [aws_lambda_permission.allow_s3_bucket]
 }
