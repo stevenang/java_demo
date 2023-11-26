@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>SqsEventLambdaDemo</artifactId>
+    <artifactId>S3EventLambdaDemo</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -135,7 +135,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>tw.idv.stevenang.lambda.SqsEventLambdaDemo</mainClass>
+                            <mainClass>tw.idv.stevenang.lambda.LambdaHandler</mainClass>
                         </manifest>
                     </archive>
                     <finalName>${project.artifactId}</finalName>

@@ -66,7 +66,6 @@ resource "aws_lambda_function" "this" {
   }
 }
 
-resource "aws_lambda_event_source_mapping" "this" {
-  event_source_arn = var.event_source_arn
-  function_name    = aws_lambda_function.this.arn
+output "aws_lambda_function_arn" {
+  value = aws_lambda_function.this.arn
 }

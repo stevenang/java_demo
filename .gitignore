@@ -9,4 +9,5 @@
 /localstack/terraform/terraform.tfstate.backup
 
 /modules/Common/target/
+/modules/S3EventLambdaDemo/target/
 /modules/SqsEventLambdaDemo/target/

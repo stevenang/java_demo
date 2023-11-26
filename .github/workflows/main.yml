@@ -51,8 +51,15 @@ jobs:
           awslocal logs filter-log-events --log-group-name "/aws/lambda/Sqs_Event_Lambda" --query 'events[*].message'
           awslocal s3api head-object --bucket test-bucket-02 --key main.tf || NOT_EXIST=true
           if [ $NOT_EXIST ]; then
-              echo "Test failed. File main.tf was not copied to test-bucket-02"
+              echo "Test SQSEventLambda failed. File main.tf was not copied to test-bucket-02"
               exit 1
           else
               echo "Test success. File main.tf found in test-bucket-02"
+          fi
+          awslocal s3api head-object --bucket test-bucket-03 --key main.tf || NOT_EXIST=true
+          if [ $NOT_EXIST ]; then
+              echo "Test S3EventLambda failed. File main.tf was not copied to test-bucket-03"
+              exit 1
+          else
+              echo "Test success. File main.tf found in test-bucket-03"
           fi

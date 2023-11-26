@@ -11,6 +11,7 @@
     <modules>
         <module>modules/Common</module>
         <module>modules/SqsEventLambdaDemo</module>
+        <module>modules/S3EventLambdaDemo</module>
     </modules>
 
     <name>demo</name>
