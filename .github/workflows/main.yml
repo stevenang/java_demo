@@ -30,6 +30,10 @@ jobs:
           tflocal init
           tflocal plan
           tflocal apply --auto-approve
+      - name: Check localstack
+        run: |
+          ping host.docker.internal
+          wget http://host.docker.internal:80
       - name: Copy file to s3 to trigger lambda
         run: |
           pwd
