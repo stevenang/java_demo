@@ -12,24 +12,38 @@ jobs:
           architecture: x64
       - name: Run maven build
         run: mvn clean install
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
       - name: Setup localstack
         run: |
           pip install localstack awscli-local[ver1] terraform-local
           docker pull localstack/localstack
-          localstack start -d
+          LAMBDA_RUNTIME_ENVIRONMENT_TIMEOUT=120 HOSTNAME_EXTERNAL=awslocal localstack start -d
           echo "Waiting for LocalStatck startup..."
           localstack wait -t 30
           echo "Startup complete"
-      - name: Test LocalStack
-        run: |
-          awslocal s3 ls
-          echo "LocalStack Test Completed"
       - name: Run terraform
         run: |
           cd localstack/terraform
           tflocal init
           tflocal plan
           tflocal apply --auto-approve
-      - name: Test LocalStack 2
+      - name: Check localstack
         run: |
-          awslocal s3api list-buckets
+          ping -c 10 localhost.localstack.cloud
+      - name: Copy file to s3 to trigger lambda
+        run: |
+          pwd
+          cd localstack/terraform
+          echo "Copy file to s3 bucket..."
+          awslocal s3api put-object --bucket test-bucket-01 --key main.tf --body main.tf
+          echo "Execute \"awslocal s3 ls s3://test-bucket-01 --human-readable\""
+          awslocal s3 ls s3://test-bucket-01 --human-readable
+          echo "Wait for 120 seconds"
+          sleep 120
+          localstack logs 
+          awslocal logs describe-log-groups
+          awslocal logs filter-log-events --log-group-name "/aws/lambda/Sqs_Event_Lambda" --query 'events[*].message' --output text
+          awslocal s3 ls s3://test-bucket-02 --human-readable

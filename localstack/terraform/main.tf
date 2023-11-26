@@ -24,7 +24,7 @@ provider "aws" {
     dynamodb       = "http://localhost:4566"
     ec2            = "http://localhost:4566"
     es             = "http://localhost:4566"
-    firehose       = "http://localhost:4566"
+    firehose        = "http://localhost:4566"
     iam            = "http://localhost:4566"
     kinesis        = "http://localhost:4566"
     lambda         = "http://localhost:4566"
@@ -116,6 +116,6 @@ module "create_lambda_for_sqs" {
   source = "./modules/lambda"
   function_name = "Sqs_Event_Lambda"
   file_name = "../../modules/SqsEventLambdaDemo/target/SqsEventLambdaDemo.jar"
-  handler = "tw.idv.stevenang.lambda.LambdaHandler::handleRequest"
+  handler = "tw.idv.stevenang.lambda.SqsEventLambdaDemo::handleRequest"
   event_source_arn = module.create_sqs_queue["test-bucket-01"].queue_arn
 }
