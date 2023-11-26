@@ -33,17 +33,26 @@ jobs:
       - name: Check localstack
         run: |
           ping -c 10 localhost.localstack.cloud
-      - name: Copy file to s3 to trigger lambda
+      - name: Test AWS Lambda Functions
         run: |
           pwd
           cd localstack/terraform
           echo "Copy file to s3 bucket..."
           awslocal s3api put-object --bucket test-bucket-01 --key main.tf --body main.tf
-          echo "Execute \"awslocal s3 ls s3://test-bucket-01 --human-readable\""
-          awslocal s3 ls s3://test-bucket-01 --human-readable
-          echo "Wait for 120 seconds"
+          sleep 30
+          echo "Check whether file uploaded to the s3 bucket or not"
+          awslocal s3api head-object --bucket test-bucket-01 --key main.tf || NOT_EXIST=true
+          if [ $NOT_EXIST ]; then
+              echo "main.tf was not uploaded to test-bucket-01"
+              exit 1
+          fi
+          echo "Wait 120 seconds for sqs event lambda process"
           sleep 120
-          localstack logs 
-          awslocal logs describe-log-groups
-          awslocal logs filter-log-events --log-group-name "/aws/lambda/Sqs_Event_Lambda" --query 'events[*].message' --output text
-          awslocal s3 ls s3://test-bucket-02 --human-readable
+          awslocal logs filter-log-events --log-group-name "/aws/lambda/Sqs_Event_Lambda" --query 'events[*].message'
+          awslocal s3api head-object --bucket test-bucket-02 --key main.tf || NOT_EXIST=true
+          if [ $NOT_EXIST ]; then
+              echo "Test failed. File main.tf was not copied to test-bucket-02"
+              exit 1
+          else
+              echo "Test success. File main.tf found in test-bucket-02"
+          fi
