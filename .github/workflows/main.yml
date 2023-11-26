@@ -32,8 +32,7 @@ jobs:
           tflocal apply --auto-approve
       - name: Check localstack
         run: |
-          wget http://localhost:80
-          ping localhost.localstack.cloud
+          ping -c 10 localhost.localstack.cloud
       - name: Copy file to s3 to trigger lambda
         run: |
           pwd
