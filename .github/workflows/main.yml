@@ -46,3 +46,4 @@ jobs:
           localstack logs 
           awslocal logs describe-log-groups
           awslocal logs filter-log-events --log-group-name "/aws/lambda/Sqs_Event_Lambda" --query 'events[*].message' --output text
+          awslocal s3 ls s3://test-bucket-02 --human-readable
